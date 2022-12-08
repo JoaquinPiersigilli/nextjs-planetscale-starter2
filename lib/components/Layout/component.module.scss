@@ -1,0 +1,22 @@
+@use "styles/breakpoints" as *;
+@use "styles/mixins" as *;
+
+.layout {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-rows: 120px 1fr;
+  grid-template-areas:
+    "navbar"
+    "content";
+  background: #1b1e29;
+  padding: 32px;
+}
+
+.navbar {
+  grid-area: navbar;
+}
+
+.content {
+  grid-area: content;
+}

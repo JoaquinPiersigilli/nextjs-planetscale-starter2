@@ -1,0 +1,33 @@
+.navbarTile {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 300;
+  color: #6e717f;
+  margin-bottom: 40px;
+  line-height: 40px;
+}
+
+.isLink {
+  &:hover {
+    cursor: pointer;
+    color: #e2ff73;
+  }
+}
+
+.selected,
+.selected > div {
+  color: #ffffff;
+  > img {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(1%) saturate(7500%)
+      hue-rotate(158deg) brightness(116%) contrast(108%);
+  }
+
+  &:hover {
+    > img {
+      filter: brightness(0) saturate(100%) invert(84%) sepia(15%)
+        saturate(1263%) hue-rotate(28deg) brightness(114%) contrast(101%);
+    }
+  }
+}

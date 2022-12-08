@@ -1,0 +1,23 @@
+@use "styles/breakpoints" as *;
+
+.mainContentContainer {
+  display: grid;
+  width: 100%;
+  grid-template-columns: min-content 1fr;
+  grid-template-areas: "image text";
+  gap: 44px;
+
+  @include respond-below(sm) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.firstChild {
+  grid-area: image;
+}
+
+.secondChild {
+  grid-area: text;
+}

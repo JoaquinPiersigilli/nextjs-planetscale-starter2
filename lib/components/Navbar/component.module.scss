@@ -1,0 +1,50 @@
+@use "styles/breakpoints" as *;
+
+.navbarContainer {
+  display: -webkit-flex;
+  display: flex;
+  position: relative;
+  //justify-content: center;
+  justify-content: space-between;
+
+  @include respond-below(smm) {
+    flex-direction: column;
+    position: static;
+    align-items: center;
+  }
+}
+
+.hypercoreLogo {
+  padding-left: 120px;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  @include respond-below(md) {
+    padding-left: 40px;
+  }
+  @include respond-below(smm) {
+    position: static;
+    padding-left: 0px;
+  }
+}
+
+.selectedTile {
+  color: #fff;
+}
+
+.navbarTiles {
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  padding-inline-start: 0px;
+  padding-right: 100px;
+
+  > *:not(:last-child) {
+    padding-right: 42px;
+  }
+
+  @include respond-below(md) {
+    padding-right: 0;
+  }
+}

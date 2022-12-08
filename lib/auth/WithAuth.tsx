@@ -1,7 +1,7 @@
 import { useSession, signIn } from "next-auth/react";
 import { useEffect } from "react";
 import router from "next/router";
-import Loader from "@lib/components/Loader";
+import { Loader } from "@lib/components";
 
 function WithAuth({ children, options }) {
   const { data: session, status } = useSession();
@@ -30,7 +30,7 @@ function WithAuth({ children, options }) {
   // If no user, useEffect() will redirect.
   return (
     <div className="h-screen w-screen flex flex-col justify-center content-center items-center">
-      <Loader className="h-6 w-6" />
+      <Loader />
     </div>
   );
 }

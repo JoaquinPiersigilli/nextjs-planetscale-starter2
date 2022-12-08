@@ -1,0 +1,9 @@
+@use "styles/breakpoints" as *;
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "IBM Plex Mono", monospace;
+}

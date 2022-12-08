@@ -3,7 +3,7 @@ import type { ExtendedAppProps } from "@lib/types";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { SessionProvider } from "next-auth/react";
 
-import "@lib/styles/index.css";
+import "../styles/globals.scss";
 import WithAuth from "@lib/auth/WithAuth";
 
 export const queryClient = new QueryClient();

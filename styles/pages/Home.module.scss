@@ -1,0 +1,27 @@
+.link {
+  color: #e2ff73;
+  font-size: 14px;
+  line-height: 20px;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.mainTextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.text {
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.hiringText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: pre;
+}
