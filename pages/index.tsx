@@ -7,7 +7,7 @@ import {
   ColumnFlexContainer,
   MainContentContainer,
   ComputerASCII,
-} from "../lib/components";
+} from "../components";
 
 import styles from "../styles/pages/Home.module.scss";
 

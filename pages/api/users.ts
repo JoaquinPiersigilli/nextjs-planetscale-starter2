@@ -6,8 +6,7 @@ import { getSession } from "@lib/auth/session";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
-  console.log(req.headers);
-  console.log(session);
+
   if (!session) {
     return res.status(401).json({
       message: "Unauthorized",

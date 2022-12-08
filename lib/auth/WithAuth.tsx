@@ -1,7 +1,7 @@
 import { useSession, signIn } from "next-auth/react";
 import { useEffect } from "react";
 import router from "next/router";
-import { Loader } from "@lib/components";
+import { Loader } from "components";
 
 function WithAuth({ children, options }) {
   const { data: session, status } = useSession();
