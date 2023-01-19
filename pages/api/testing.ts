@@ -1,8 +1,9 @@
-import prisma from "../../lib/prisma";
+import prisma from "../../db/index";
 
 export default async function assetHandler(req, res) {
   const { method } = req;
-
+  console.log(process.env);
+  console.log(process.env.DATABASE_URL);
   switch (method) {
     case "GET":
       try {
