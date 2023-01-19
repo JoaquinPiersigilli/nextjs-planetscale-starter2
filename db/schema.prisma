@@ -1,6 +1,5 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
@@ -9,55 +8,114 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Account {
-  id                       String   @id @default(cuid())
+model Proposal {
+  id                       Int @id
   createdAt                DateTime @default(now())
   updatedAt                DateTime @updatedAt
-  userId                   String
-  type                     String
-  provider                 String
-  providerAccountId        String
-  refresh_token            String?  @db.VarChar(500)
-  access_token             String?  @db.VarChar(500)
-  refresh_token_expires_in Int?
-  expires_at               Int?
-  token_type               String?
-  scope                    String?
-  id_token                 String?  @db.Text
-  session_state            String?
-  oauth_token_secret       String?
-  oauth_token              String?
-  user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ipfs                     String
+  status                   ProposalStatus
+  summaryText              String @db.Text
+  title                    String
+  body                     String @db.Text
+  authors                  Member[]
+  survey                   Survey @relation(fields: [surveyId], references: [id])
+  surveyId                 String @unique
 
-  @@unique([provider, providerAccountId])
+  @@index([surveyId])
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  expires      DateTime
-  userId       String?
-  user         User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+enum ProposalStatus {
+  living
+  idea
+  draft
+  review
+  last_call
+  stagnant
+  withdrawn
+  final
 }
 
-model User {
-  id            String    @id @default(cuid())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  name          String?
-  email         String?   @unique
-  password      String?
-  emailVerified DateTime?
-  image         String?
-  role          String?   @default("user")
-  accounts      Account[]
-  sessions      Session[]
+model Member {
+  id                       String   @id @default(cuid())
+  name                     String
+  address                  String
+  signature                String
+  isAuthor                 Boolean
+  authorProposals          Proposal[]
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+model Survey {
+  id                       String   @id @default(cuid())
+  voteStartsAt             String
+  voteEndsAt               String
+  votingSystem             VotingSystem @relation(fields: [votingSystemId], references: [id])
+  votingSystemId           String       @unique 
+  proposal                 Proposal?
+  options                  SurveyOption[]
+  votes                    Vote[]
+  createdAt                DateTime
+  updatedAt                DateTime
+}
 
-  @@unique([identifier, token])
+model SurveyOption {
+  id                       String @id @default(cuid())
+  description              String
+  survey                   Survey @relation(fields:[surveyId],references:[id])
+  surveyId                 String
+  voteSelections           VoteSelection[]
+  createdAt                DateTime
+  updatedAt                DateTime
+
+  @@index([surveyId])
+}
+
+model VotingSystem {
+  id                       String   @id @default(cuid())
+  slug                     String
+  type                     VotingSystemTypes @default(SINGLE_CHOICE)
+  description              String
+  minChoices               Int
+  maxChoices               Int?
+  survey                   Survey?
+  createdAt                DateTime
+  updatedAt                DateTime
+}
+
+enum VotingSystemTypes {
+  SINGLE_CHOICE
+  APPROVAL
+  RANKED
+  WEIGHTED
+  WEIGHTED_QUADRATIC
+  BASIC
+}
+
+model Vote {
+  id                       String   @id @default(cuid())
+  signature                String
+  voteSelections           VoteSelection[]
+  survey                   Survey @relation(fields:[surveyId],references:[id])
+  surveyId                 String
+  createdAt                DateTime
+  updatedAt                DateTime
+
+  @@index([surveyId])
+}
+
+model VoteSelection {
+  id                       String @id @default(cuid())
+  vote                     Vote @relation(fields:[voteId],references:[id])
+  voteId                   String
+  ordinal                  Int
+  amount                   BigInt @db.UnsignedBigInt()
+  surveyOption             SurveyOption @relation(fields:[surveyOptionId],references:[id])
+  surveyOptionId           String
+  createdAt                DateTime
+  updatedAt                DateTime
+
+  @@index([voteId])
+  @@index([surveyOptionId])
+  @@unique([ordinal, voteId], name: "voteIdentifier")
 }
